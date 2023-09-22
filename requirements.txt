@@ -1,5 +1,5 @@
-sckit-learn
+scikit-learn
 seaborn
 pandas
 altair
-ploly.express
+plotly.express
