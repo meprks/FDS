@@ -3,7 +3,9 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-st.markdown("# Hello, I am Prakash KC and This is my Webapp!")
+c1,c2=st.columns(2)
+c1.markdown("# Hello, I am Prakash KC")
+c2.markdown("# This is my Webapp!")
 
 # Load your dataset
 df = pd.read_csv("metamaterials.csv")
