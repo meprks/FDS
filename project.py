@@ -89,6 +89,3 @@ elif plot_type == 'Heatmap':
     sns.heatmap(corr_matrix, annot=True, cmap='coolwarm')
     
 st.pyplot(plt.gcf())
-
-    
-
