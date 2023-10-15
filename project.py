@@ -88,7 +88,7 @@ elif plot_type == 'Bar Plot':
 
 elif plot_type == 'Heatmap':
     # Assuming you want a heatmap of correlations between numerical columns
-    corr_matrix = df.corr()
+    corr_matrix = df[numerical_columns].corr()
     sns.heatmap(corr_matrix, annot=True, cmap='coolwarm')
     
 st.pyplot(plt.gcf())
