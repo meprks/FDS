@@ -123,3 +123,4 @@ elif plot_type == '3D Plot':
 
     st.pyplot(fig)
 
+st.pyplot(plt.gcf())
