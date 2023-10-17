@@ -171,13 +171,19 @@ if show_story == "Yes":
 
 
     st.subheader("Physical Activity Level vs. Sleep Duration")
+    df_numeric = df.select_dtypes(include=[np.number])
+    corr_matrix = df_numeric.corr()
     corr_matrix = df.corr()  # Compute pairwise correlation of columns
     heatmap = px.imshow(corr_matrix, color_continuous_scale='RdBu')
     st.plotly_chart(heatmap)
     st.write("### What does the Plot show?")
     st.write("The plot visualizes the correlation between data. "
                "It shows a positive correlation for physical activity level and sleep duration, indicating that people with high physical activity levels tend to have longer sleep durations.")
-    
+   
+
+
+ 
+
 
     st.subheader("Stress Level vs. Sleep Duration")
     box_plot = px.box(df, x="Stress Level", y="Sleep Duration", color="Stress Level", color_discrete_sequence=px.colors.qualitative.Dark24)
