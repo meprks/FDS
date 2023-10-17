@@ -1,51 +1,37 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+import pandas as pd 
+import plotly.express as px
+import altair as alt
 
-st.set_option('deprecation.showPyplotGlobalUse', False)
-st.title("Exploring Sleep and Health Data")
+st.title('Exploring Sleep Dataset')
 
-df = pd.read_csv("Sleep_health_and_lifestyle_dataset.csv")
+df = pd.read_csv('sleep_dataset.csv')
 
-show_story = st.radio("Do you want to see the story?", ("Yes", "No"))
+if st.checkbox('Show Plots'):
 
-if show_story == "Yes":
-    st.subheader("Age vs. Sleep Duration (Hue: Gender)")
-    joint_plot = sns.jointplot(data=df, x="Age", y="Sleep Duration", hue="Gender", kind="scatter")
-    st.pyplot(joint_plot.fig)
-    st.write("### What does the Plot show?")
-    st.write("The plot visualizes the relationship between Age and Sleep Duration, "
-               "color-coded by Gender. It shows that females with a high age group have a higher sleep duration than males. "
-               "The average sleep duration for males generally lies between 7 and 8 hours, while for females, it is between 8 and 9 hours.")
+  # Age vs Sleep Duration 
+  fig = px.scatter(df, x='Age', y='Sleep Duration', color='Gender', title='Age vs Sleep Duration')
+  st.plotly_chart(fig)
 
-    st.subheader("Physical Activity Level vs. Sleep Duration")
-    sns.regplot(data=df, x="Physical Activity Level", y="Sleep Duration")
-    st.pyplot()
-    st.write("### What does the Plot show?")
-    st.write("The plot visualizes the relationship between Physical Activity Level and Sleep Duration. "
-               "It shows a positive correlation, indicating that people with high physical activity levels tend to have longer sleep durations.")
-    
-    st.subheader("Stress Level vs. Sleep Duration")
-    colors = ["#FF0000", "#0000FF", "#00FF00"]
-    sns.boxplot(data=df, x="Stress Level", y="Sleep Duration", color=colors)
-    st.pyplot()
-    st.write("### What does the Plot show?")
-    st.write("The plot visualizes the relationship between Stress Level and Sleep Duration. "
-               "It shows that higher stress levels are associated with longer sleep durations, suggesting that stress may affect sleep duration positively.")
+  # Physical Activity vs Sleep Duration
+  chart = alt.Chart(df).mark_circle().encode(
+      x='Physical Activity',
+      y='Sleep Duration')
+  st.altair_chart(chart)
 
-    st.subheader("BMI Category vs. Sleep Duration")
-    colors = ["#FF0000", "#0000FF", "#00FF00"]
-    sns.boxplot(data=df, x="BMI Category", y="Sleep Duration",color=colors)
-    st.pyplot()
-    st.write("### What does the Plot show?")
-    st.write("The plot visualizes the relationship between BMI Category and Sleep Duration. "
-               "It shows that individuals with normal weight tend to have better sleep duration compared to those who are overweight or obese.")
+  # Stress Level vs Sleep Duration
+  fig = px.box(df, x='Stress Level', y='Sleep Duration')
+  st.plotly_chart(fig)
 
-    st.subheader("Sleep Disorder vs. Sleep Duration")
-    colors = ["#FF0000", "#0000FF", "#00FF00"]
-    sns.boxplot(data=df, x="Sleep Disorder", y="Sleep Duration",color=colors)
-    st.pyplot()
-    st.write("### What does the Plot show?")
-    st.write("The plot visualizes the relationship between Sleep Disorder and Sleep Duration. "
-               "It shows that individuals with insomnia tend to have shorter sleep durations.")
+  # BMI vs Sleep Duration
+  chart = alt.Chart(df).mark_boxplot().encode(
+      x='BMI', y='Sleep Duration')
+  st.altair_chart(chart)
+
+  # Sleep Disorder vs Sleep Duration
+  fig = px.violin(df, x='Sleep Disorder', y='Sleep Duration', color='Sleep Disorder', box=True)
+  st.plotly_chart(fig)
+
+  # Gender vs Sleep Duration 
+  fig = px.violin(df, x='Gender', y='Sleep Duration', color='Gender', box=True)
+  st.plotly_chart(fig)
