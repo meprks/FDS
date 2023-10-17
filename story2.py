@@ -1,37 +1,37 @@
 import streamlit as st
-import pandas as pd 
-import plotly.express as px
+import pandas as pd
 import altair as alt
+import plotly.express as px
 
-st.title('Exploring Sleep Dataset')
+st.set_option('deprecation.showPyplotGlobalUse', False)
+st.title("Exploring Sleep and Health Data")
 
-df = pd.read_csv('sleep_dataset.csv')
+df = pd.read_csv("Sleep_health_and_lifestyle_dataset.csv")
 
-if st.checkbox('Show Plots'):
+show_story = st.radio("Do you want to see the story?", ("Yes", "No"))
 
-  # Age vs Sleep Duration 
-  fig = px.scatter(df, x='Age', y='Sleep Duration', color='Gender', title='Age vs Sleep Duration')
-  st.plotly_chart(fig)
+if show_story == "Yes":
+    st.subheader("Age vs. Sleep Duration (Hue: Gender)")
+    scatter_plot = alt.Chart(df).mark_circle().encode(
+        x='Age',
+        y='Sleep Duration',
+        color='Gender',
+        tooltip=['Age', 'Sleep Duration', 'Gender']
+    )
+    st.altair_chart(scatter_plot, use_container_width=True)
 
-  # Physical Activity vs Sleep Duration
-  chart = alt.Chart(df).mark_circle().encode(
-      x='Physical Activity',
-      y='Sleep Duration')
-  st.altair_chart(chart)
+    st.subheader("Physical Activity Level vs. Sleep Duration")
+    scatter_plot = px.scatter(df, x="Physical Activity Level", y="Sleep Duration")
+    st.plotly_chart(scatter_plot)
 
-  # Stress Level vs Sleep Duration
-  fig = px.box(df, x='Stress Level', y='Sleep Duration')
-  st.plotly_chart(fig)
+    st.subheader("Stress Level vs. Sleep Duration")
+    box_plot = px.box(df, x="Stress Level", y="Sleep Duration")
+    st.plotly_chart(box_plot)
 
-  # BMI vs Sleep Duration
-  chart = alt.Chart(df).mark_boxplot().encode(
-      x='BMI', y='Sleep Duration')
-  st.altair_chart(chart)
+    st.subheader("BMI Category vs. Sleep Duration")
+    box_plot = px.box(df, x="BMI Category", y="Sleep Duration")
+    st.plotly_chart(box_plot)
 
-  # Sleep Disorder vs Sleep Duration
-  fig = px.violin(df, x='Sleep Disorder', y='Sleep Duration', color='Sleep Disorder', box=True)
-  st.plotly_chart(fig)
-
-  # Gender vs Sleep Duration 
-  fig = px.violin(df, x='Gender', y='Sleep Duration', color='Gender', box=True)
-  st.plotly_chart(fig)
+    st.subheader("Sleep Disorder vs. Sleep Duration")
+    box_plot = px.box(df, x="Sleep Disorder", y="Sleep Duration")
+    st.plotly_chart(box_plot)
