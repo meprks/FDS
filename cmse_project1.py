@@ -8,6 +8,8 @@ from scipy.stats import zscore
 from mpl_toolkits.mplot3d import Axes3D  # Import for 3D plot
 import altair as alt
 import plotly.express as px
+import hiplot as hip
+import streamlit.components.v1 as components
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 image = st.image("sleep.png", use_column_width=True)
@@ -141,10 +143,11 @@ elif plot_type == 'Facet Grid':
     st.plotly_chart(facet_grid)
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
-st.title("Exploring Sleep and Health Data")
-show_story = st.radio("### Do you want to see the story?", ("Yes", "No"))
 
-if show_story == "Yes":
+show_story = st.sidebar.checkbox('### Do you want to see the story?')
+
+if show_story:
+    st.title("Exploring Sleep and Health Data")
     st.subheader("Age vs. Sleep Duration (Hue: Gender)")
     scatter_plot = alt.Chart(df).mark_circle().encode(
         x='Age',
@@ -154,8 +157,8 @@ if show_story == "Yes":
     )
     st.altair_chart(scatter_plot, use_container_width=True)
     st.write("### What does the Plot show?")
-    st.write("The plot visualizes the relationship between Age and Sleep Duration, "
-               "color-coded by Gender. It shows that females with a high age group have a higher sleep duration than males. "
+    st.write("The plot visualizes the relationship between Age and Sleep Duration. "
+               " It shows that females with a high age group have a higher sleep duration than males. "
                "The average sleep duration for males generally lies between 7 and 8 hours, while for females, it is between 8 and 9 hours.")
 
 
@@ -189,3 +192,13 @@ if show_story == "Yes":
     st.write("### What does the Plot show?")
     st.write("The plot visualizes the relationship between Sleep Disorder and Sleep Duration. "
                "It shows that individuals with insomnia tend to have shorter sleep durations.")
+    
+show_hiplot = st.sidebar.checkbox('Do you want to see HiPlot?')
+
+if show_hiplot:
+    st.title("HiPlot")
+    exp = hip.Experiment.from_dataframe(df)
+    hiplot_html = exp.to_html()
+    st.components.v1.html(exp.to_html(), width=1000, height=500, scrolling=True)
+    st.write("HiPlot is a visualization tool designed for exploration of multi-dimensional data. It provides a way to understand and compare the relationships between multiple variables."
+            "One simple explaination can be made for the female of higher age with the occupation of nurse has higher sleep duration and quality of sleep.")
