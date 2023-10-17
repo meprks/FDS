@@ -153,7 +153,7 @@ elif plot_type == 'Facet Grid':
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 st.title("Exploring Sleep and Health Data")
-show_story = st.radio("Do you want to see the story?", ("Yes", "No"))
+show_story = st.radio("### Do you want to see the story?", ("Yes", "No"))
 
 if show_story == "Yes":
     st.subheader("Age vs. Sleep Duration (Hue: Gender)")
