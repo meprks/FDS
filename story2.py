@@ -12,9 +12,8 @@ show_story = st.radio("Do you want to see the story?", ("Yes", "No"))
 
 if show_story == "Yes":
     st.subheader("Age vs. Sleep Duration (Hue: Gender)")
-    joint_plot = sns.jointplot(data=df, x="Age", y="Sleep Duration", hue="Gender", kind="scatter")
-    st.pyplot(joint_plot.fig)
-    plt.clf()  # Clear the current figure
+    sns.jointplot(data=df, x="Age", y="Sleep Duration", hue="Gender", kind="scatter")
+   
     st.write("### What does the Plot show?")
     st.write("The plot visualizes the relationship between Age and Sleep Duration, "
                "color-coded by Gender. It shows that females with a high age group have a higher sleep duration than males. "
@@ -22,32 +21,31 @@ if show_story == "Yes":
 
     st.subheader("Physical Activity Level vs. Sleep Duration")
     sns.regplot(data=df, x="Physical Activity Level", y="Sleep Duration")
-    st.pyplot()
-    plt.clf()  # Clear the current figure
+    
     st.write("### What does the Plot show?")
     st.write("The plot visualizes the relationship between Physical Activity Level and Sleep Duration. "
                "It shows a positive correlation, indicating that people with high physical activity levels tend to have longer sleep durations.")
     
     st.subheader("Stress Level vs. Sleep Duration")
     sns.boxplot(data=df, x="Stress Level", y="Sleep Duration")
-    st.pyplot()
-    plt.clf()  # Clear the current figure
+    
     st.write("### What does the Plot show?")
     st.write("The plot visualizes the relationship between Stress Level and Sleep Duration. "
                "It shows that higher stress levels are associated with longer sleep durations, suggesting that stress may affect sleep duration positively.")
 
     st.subheader("BMI Category vs. Sleep Duration")
     sns.boxplot(data=df, x="BMI Category", y="Sleep Duration")
-    st.pyplot()
-    plt.clf()  # Clear the current figure
+
     st.write("### What does the Plot show?")
     st.write("The plot visualizes the relationship between BMI Category and Sleep Duration. "
                "It shows that individuals with normal weight tend to have better sleep duration compared to those who are overweight or obese.")
 
     st.subheader("Sleep Disorder vs. Sleep Duration")
     sns.boxplot(data=df, x="Sleep Disorder", y="Sleep Duration")
-    st.pyplot()
-    plt.clf()  # Clear the current figure
+    
     st.write("### What does the Plot show?")
     st.write("The plot visualizes the relationship between Sleep Disorder and Sleep Duration. "
                "It shows that individuals with insomnia tend to have shorter sleep durations.")
+
+
+st.pyplot(plt.gcf())
