@@ -32,7 +32,6 @@ plot_type = st.sidebar.selectbox(
         "Scatter",
         "Relational Plot",
         "Categorical Plot",
-        "Line Plot",
         "Bar Plot",
         "Heatmap",
         "3D Plot",
@@ -79,16 +78,6 @@ elif plot_type == 'Categorical Plot':
         color=alt.Color(origin + ':N', scale=alt.Scale(scheme='set2'))  # Modify this line
     )
     st.altair_chart(bar_plot, use_container_width=True)
-
-
-elif plot_type == 'Line Plot':
-    st.write("### What is Line Plot?")
-    st.write(" A line plot displays how a continuous variable changes over time or across some sequential value. It connects a series of data points with line segments to show trends and patterns. Line plots make it easy to see increases, decreases, peaks, valleys, and anomalies in data. Line plots are useful for visualizing trends over time, demonstrating change, and comparing several lines to analyze relationships between variables.")
-    
-    x = st.sidebar.selectbox('x_axis:', numerical_columns)
-    y = st.sidebar.selectbox('y_axis', numerical_columns)
-    line_plot = px.line(df, x=x, y=y, color_discrete_sequence=px.colors.sequential.Plasma_r)
-    st.plotly_chart(line_plot)
 
 elif plot_type == 'Bar Plot':
     st.write("### What is Bar Plot?")
