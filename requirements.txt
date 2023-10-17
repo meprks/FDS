@@ -3,3 +3,5 @@ seaborn
 pandas
 altair
 plotly.express
+streamlit
+matplotlib
