@@ -142,10 +142,7 @@ st.pyplot(plt.gcf())
 st.set_option('deprecation.showPyplotGlobalUse', False)
 st.title("Exploring a story of Sleep and Health Data")
 
-df = pd.read_csv("Sleep_health_and_lifestyle_dataset.csv")
-
 show_story = st.radio("Do you want to see the story?", ("Yes", "No"))
-
 if show_story == "Yes":
     st.subheader("Age vs. Sleep Duration (Hue: Gender)")
     joint_plot = sns.jointplot(data=df, x="Age", y="Sleep Duration", hue="Gender", kind="scatter")
