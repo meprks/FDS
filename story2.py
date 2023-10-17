@@ -27,7 +27,7 @@ if show_story == "Yes":
                "It shows a positive correlation, indicating that people with high physical activity levels tend to have longer sleep durations.")
     
     st.subheader("Stress Level vs. Sleep Duration")
-    colors = ["red", "green", "blue"]
+    colors = ["#FF0000", "#0000FF", "#00FF00"]
     sns.boxplot(data=df, x="Stress Level", y="Sleep Duration", color=colors)
     st.pyplot()
     st.write("### What does the Plot show?")
@@ -35,7 +35,7 @@ if show_story == "Yes":
                "It shows that higher stress levels are associated with longer sleep durations, suggesting that stress may affect sleep duration positively.")
 
     st.subheader("BMI Category vs. Sleep Duration")
-    colors = ["red", "green", "blue"]
+    colors = ["#FF0000", "#0000FF", "#00FF00"]
     sns.boxplot(data=df, x="BMI Category", y="Sleep Duration",color=colors)
     st.pyplot()
     st.write("### What does the Plot show?")
@@ -43,7 +43,7 @@ if show_story == "Yes":
                "It shows that individuals with normal weight tend to have better sleep duration compared to those who are overweight or obese.")
 
     st.subheader("Sleep Disorder vs. Sleep Duration")
-    colors = ["red", "green", "blue"]
+    colors = ["#FF0000", "#0000FF", "#00FF00"]
     sns.boxplot(data=df, x="Sleep Disorder", y="Sleep Duration",color=colors)
     st.pyplot()
     st.write("### What does the Plot show?")
