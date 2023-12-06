@@ -267,7 +267,7 @@ with class_tab:
     df2["Occupation"].replace(["Software Engineer", "Doctor","Sales Representative","Software Engineer","Teacher","Nurse","Engineer","Accountant","Scientist","Lawyer","Salesperson","Manager"],  [0,1,2,3,4,5,6,7,8,9,10,11], inplace=True)
     df2["BMI Category"].replace(["Normal", "Overweight","Obese"], [0,1,2], inplace=True)
     df2["Sleep Disorder"].replace(["No Disorder", "Sleep Apnea", "Insomnia"], [0,1,2], inplace=True)
-    st.markdown("## :violet[Select catagorical values from below]")
+    st.markdown("## Select catagorical input")
     gender = st.selectbox(' Please select  Gender:', ["Male", "Female"])
     occupation = st.selectbox(' Please select  Occupation type:', ["Software Engineer", "Doctor","Sales Representative","Software Engineer","Teacher","Nurse","Engineer","Accountant","Scientist","Lawyer","Salesperson","Manager"])
     disorder = st.selectbox(' Please select  Disorder type:', ["No Disorder", "Sleep Apnea", "Insomnia"])
@@ -308,7 +308,7 @@ with class_tab:
         dis = 1
     elif disorder == "Insomnia":
         dis = 2
-    st.markdown("## :violet[Select numerical values from below]")
+    st.markdown("## Select numerical input")
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -328,8 +328,8 @@ with class_tab:
     X = np.array(df2[["Gender", "Age", "Occupation", "Sleep Duration", "Quality of Sleep", "Physical Activity Level", "Stress Level", "Heart Rate", "Daily Steps", "Sleep Disorder"]])
     y = np.array(df2["BMI Category"])
 
-    st.markdown("## :violet[Insert the (percentage) of total data sample for test samples below]")
-    test_fraction_per = st.number_input("Insert the (percentage) of total data sample for test samples", value=20, min_value=5, max_value=40, step=1)
+    st.markdown("## Enter the test sample percentage")
+    test_fraction_per = st.number_input("Sample Percent", value=20, min_value=5, max_value=40, step=1)
     test_fraction = test_fraction_per / 100
     x_cat_train, x_cat_test, y_cat_train, y_cat_test = train_test_split(X, y, test_size=test_fraction, random_state=0)
     model_type = st.selectbox(
@@ -344,7 +344,7 @@ with class_tab:
 )
     if model_type=="KNeighborsClassifier":
         modell = KNeighborsClassifier()
-        neighbors_num=st.number_input("Specify number of neighbors to be considered", value=3, min_value=1,max_value=30, step=1)
+        neighbors_num=st.number_input("Enter the number of neighbors", value=3, min_value=1,max_value=30, step=1)
         modell = KNeighborsClassifier(n_neighbors=neighbors_num)
         modell.fit(x_cat_train, y_cat_train)
         y_cat_pred = modell.predict(x_cat_test)
@@ -364,7 +364,7 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is {pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
 
     if model_type=="Logistic Regression":
         modell = LogisticRegression()
@@ -387,7 +387,7 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is {pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
     if model_type=="Support Vector Machine":
         modell = SVR()
         modell.fit(x_cat_train, y_cat_train)
@@ -409,7 +409,7 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is {pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
 
     if model_type=="RandomForestClassifier":
         modell = RandomForestClassifier()
@@ -431,7 +431,7 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is {pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
 
     if model_type=="DecisionTreeClassifier":
         modell = DecisionTreeClassifier()
@@ -454,6 +454,6 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is {pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
 
     
