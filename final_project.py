@@ -31,7 +31,7 @@ df = pd.read_csv("sleep.csv")
 categorical_columns = ["Gender", "Occupation", "Sleep Disorder", "BMI Category"]
 excluded_columns = categorical_columns + ["Person ID"]+["Blood Pressure"]
 numerical_columns = [col for col in df.columns if col not in excluded_columns]
-author_tab, data_tab, eda_tab, story_tab, pca_tab, model_tab, class_tab= st.tabs(["About Author","About Dataset", "Basic EDA", "Story","PCA","Model Prediction","Classification"])
+author_tab, data_tab, eda_tab, story_tab, pca_tab, model_tab, class_tab, user_tab= st.tabs(["About Author","About Dataset", "Basic EDA", "Story","PCA","Model Prediction","Classifier", "Instruction to User"])
 with author_tab:
     
     st.image('prks.jpg', caption='Prakash KC') 
@@ -455,4 +455,23 @@ with class_tab:
             pred_res= "Obese"
         st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
 
-    
+with user_tab:
+    st.title('Sleep Well to have Health lifestyle and stay Healthy to have Quality Sleep')
+
+    st.header('About the Author')
+    st.write('This section gives you an insight into the creator of the app. Read through the information to learn more about the author\'s background, expertise, and motivations behind creating this app.')
+
+    st.header('Basic EDA (Exploratory Data Analysis)')
+    st.write('This section allows you to explore the basic statistics and visualizations of the data. Interact with various charts and graphs to understand the data\'s distributions, correlations, and other statistical properties.')
+
+    st.header('A Story')
+    st.write('Here, you\'ll find some specific visualizations that the author created to have a specific idea about the data. Go through the story to gain specific insights that the author wants to deliver.')
+
+    st.header('Model Prediction')
+    st.write('In this tab, you can input specific data of several parameters to predict the quality of sleep and sleep duration using a machine learning model.')
+
+    st.header('Classifier')
+    st.write('This section is dedicated to using several classifier models to predict the weight of an individual based on sleep patterns, daily activities, and health.')
+
+
+   
