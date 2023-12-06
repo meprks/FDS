@@ -337,7 +337,6 @@ with class_tab:
     (
         "KNeighborsClassifier",
         "Logistic Regression",
-        "SVR",
         "RandomForestClassifier",
         "DecisionTreeClassifier",
     )
