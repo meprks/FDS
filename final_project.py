@@ -21,47 +21,50 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay,f1_score
 
-
-
+st.set_page_config(layout='wide')
+a1, a2, a3 =st.columns([1,1,1])
+a2. title(" !!WELCOME!!")
+b1, b2, b3 =st.columns([2.5,7,1])
+b2.write("## Did you sleep well today?")
 image = st.image("sleep.png", use_column_width=True)
 
-st.write(" The webapp is designed to explore the relationship between sleep and health through interactive data visualizations and predict the quality of sleep using several machine learning technique. It includes diverse plots for surface insights into how sleep duration, efficiency, timing, and quality correlate to health markers. Interactive controls allow you to highlight points of interest. The app enables discovery of connections between sleep and wellbeing. Use these insights to learn about the importance of quality sleep and improve your own habits for better health.")
+st.write(" <p style='text-align: justify;'>'""<strong>" "The webapp is designed to explore the relationship between sleep and health through interactive data visualizations and predict the quality of sleep using several machine learning technique. It includes diverse plots for surface insights into how sleep duration, efficiency, timing, and quality correlate to health markers. Interactive controls allow you to highlight points of interest. The app enables discovery of connections between sleep and wellbeing. Use these insights to learn about the importance of quality sleep and improve your own habits for better health.</p>",unsafe_allow_html=True)
 
 df = pd.read_csv("sleep.csv")
 categorical_columns = ["Gender", "Occupation", "Sleep Disorder", "BMI Category"]
 excluded_columns = categorical_columns + ["Person ID"]+["Blood Pressure"]
 numerical_columns = [col for col in df.columns if col not in excluded_columns]
-author_tab, data_tab, eda_tab, story_tab, pca_tab, model_tab, class_tab, user_tab= st.tabs(["About Author","About Dataset", "Basic EDA", "Story","PCA","Model Prediction","Classifier", "Instruction to User"])
-with author_tab:
-    
-    st.image('prks.jpg', caption='Prakash KC') 
-    st.write("Hi, I am Prakash K.C. I completed my BSc in Mechanical Engineering. Currently, I am pursuing my graduate study in Mechanical engineering department at Michigan State University. I am working as a research assistant at the FMATH research group. I am an enthusiastic, curious, and industrious person.")
-    col1, col2, col3,col4,col5 = st.columns([2, 2 ,2, 2, 2])
-    col1.markdown("[My GitHub](https://github.com/meprks)")  
-    col3.markdown("[My Website](https://sites.google.com/view/meprks/home)")  
-    col5.markdown("[My LinkedIn](https://www.linkedin.com/in/prks/)")
+selected_section = st.sidebar.radio(
+    "Menu",
+    ("Dataset", "Basic EDA", "Most Influncing parameters", "Principal Component Analysis", "Sleep duration and quality Prediction", "Weight class Prediction", "About Author")
+)
 
+if selected_section == "Dataset":
+    a1, a2, a3,a4,a5 =st.columns([2,1,4,1,1])
+    a3.header("About the Dataset")
+    st.write("<p style='text-align: justify;'>"
+"The Sleep and Health Dataset is a comprehensive collection of data sourced from various studies and surveys, focused on exploring the relationship between sleep patterns and overall health across a wide range of categories. This invaluable resource includes data related to age, sleep duration, sleep quality, physical activity level, stress level, BMI category, the number of steps taken, and sleep disorders. It serves as an invaluable asset for researchers, data scientists, and healthcare professionals interested in understanding the multifaceted impact of sleep on human health. This dataset offers a rich and diverse source of information for conducting in-depth analyses and investigations into the complex interplay between sleep habits and various health-related factors. Hosted on Kaggle, it provides an opportunity for researchers to gain insights into how these variables are interconnected and influence overall well-being.</p>",unsafe_allow_html=True
 
-with data_tab:
-    st.write("## Dataset for Sleep_health_and_lifestyle")
-    st.write("The Sleep and Health Dataset is a comprehensive collection of data sourced from various studies and surveys, focused on exploring the relationship between sleep patterns and overall health based upon several category. Hosted on Kaggle, this dataset is an invaluable resource for researchers, data scientists, and healthcare professionals interested in understanding the impact of sleep on human health..")
+)
     c1, c2, c3 = st.columns([3, 4, 4])
     c1.write("### Dataset")
     b1 = c1.button(":green[Show dataset]")
     if b1:
         st.dataframe(df)
-    c2.write("### Numerical Columns")    
+    c2.write("### Numerical dataset")    
     b2 = c2.button(":green[Show Numerical columns]")
     if b2:
         st.text(', '.join(numerical_columns))
         st.dataframe(df[numerical_columns])
-    c3.write("### Categorical Columns")
+    c3.write("### Categorical dataset")
     b3 = c3.button(":green[Show Categorical columns]")
     if b3:
          st.text(', '.join(categorical_columns))
          st.dataframe(df[categorical_columns])
-with eda_tab:
-    st.write("## In this section, we will explore several visualization of dataset")
+elif selected_section == "Basic EDA":
+    # Display content for 'Basic EDA'
+    st.header("Basic Exploratory Data Analysis (EDA)")
+    st.write("<p style='text-align: justify;'>" "In this section, you will explore several visualization of dataset.</p>",unsafe_allow_html=True )
     plot_type = st.selectbox(
     "Select a Plot",
     (
@@ -155,8 +158,10 @@ with eda_tab:
     if st.button(":green[Hide HiPlot]"):
         b1 = False
 
-with story_tab:
-    st.title("Exploring Sleep and Health Data")
+elif selected_section == "Most Influncing parameters":
+    # Display content for 'Story'
+    st.header("Most Influncing parameters")
+    st.write("<p style='text-align: justify;'>""In this section, you will find the most influncing parameters to the sleep duration and sleep quality..</p>",unsafe_allow_html=True )
     st.subheader("Age vs. Sleep Duration (Hue: Gender)")
     scatter_plot = alt.Chart(df).mark_circle().encode(
         x='Age',
@@ -192,7 +197,9 @@ with story_tab:
     st.plotly_chart(box_plot)
     st.write("It shows that individuals with insomnia tend to have shorter sleep durations.")
 
-with pca_tab:
+elif selected_section == "Principal Component Analysis":
+    # Display content for 'PCA'
+    st.header("Principal Component Analysis (PCA)")
     excluded = categorical_columns + ["Person ID"]+["Blood Pressure"]+["Sleep Duration"]
     numerical = [col for col in df.columns if col not in excluded]
     st.title("PCA Analysis on multiple data")
@@ -227,8 +234,10 @@ with pca_tab:
 
     st.plotly_chart(fig_1D)
 
-with model_tab:
-    st.write("## In this section, you can predict you sleep duration and quality based upon  Age, Physical Activity Level, Stress Level, Heart Rate, Daily Steps.")
+elif selected_section == "Sleep duration and quality Prediction":
+    # Display content for 'Model Prediction'
+    st.header("Sleep duration and quality Prediction")
+    st.write("<p style='text-align: justify;'>""In this section, you can predict you sleep duration and quality based upon  Age, Physical Activity Level, Stress Level, Heart Rate, Daily Steps using linear regression model..</p>",unsafe_allow_html=True )
    
     X = df[['Age', 'Physical Activity Level', 'Stress Level', 'Heart Rate', 'Daily Steps']]
     y_duration = df['Sleep Duration']
@@ -261,54 +270,38 @@ with model_tab:
         st.write(f"Predicted Sleep Duration: {predicted_duration:.2f} hours")
         st.write(f"Predicted Sleep Quality: {predicted_quality}")
 
-with class_tab:
+elif selected_section == "Weight class Prediction":
+    # Display content for 'Classifier'
+    st.header("Weight class Prediction")
+    st.write("<p style='text-align: justify;'>""In this section you can predict your weight class based upon your sleep duration, sleep quality, Physical activity, number of step, heart rate, stress level, and Age using some of the available classifier module..</p>",unsafe_allow_html=True )
     df2 = df.copy()
     df2["Gender"].replace(["Male", "Female"], [1, 0], inplace=True)
     df2["Occupation"].replace(["Software Engineer", "Doctor","Sales Representative","Software Engineer","Teacher","Nurse","Engineer","Accountant","Scientist","Lawyer","Salesperson","Manager"],  [0,1,2,3,4,5,6,7,8,9,10,11], inplace=True)
     df2["BMI Category"].replace(["Normal", "Overweight","Obese"], [0,1,2], inplace=True)
     df2["Sleep Disorder"].replace(["No Disorder", "Sleep Apnea", "Insomnia"], [0,1,2], inplace=True)
-    st.markdown("## Select catagorical input")
-    gender = st.selectbox(' Please select  Gender:', ["Male", "Female"])
-    occupation = st.selectbox(' Please select  Occupation type:', ["Software Engineer", "Doctor","Sales Representative","Software Engineer","Teacher","Nurse","Engineer","Accountant","Scientist","Lawyer","Salesperson","Manager"])
-    disorder = st.selectbox(' Please select  Disorder type:', ["No Disorder", "Sleep Apnea", "Insomnia"])
-    if gender == "Male":
-        gen = 1
-    elif gender == "Female":
-        gen = 0
-
-    if occupation == "Software Engineer": 
-        occ = 0
-    elif occupation  == "Doctor":
-        occ = 1
-    elif occupation  == "Sales Representative":
-        occ = 2
-    elif occupation  == "Software Engineer":
-        occ = 3
-    elif occupation  == "Teacher":
-        occ = 4
-    elif occupation  == "Nurse":
-        occ = 5
-    elif occupation  == "Engineer":
-        occ = 6
-    elif occupation  == "Accountant":
-        occ = 7
-    elif occupation  == "Scientist":
-        occ = 8
-    elif occupation  == "Lawyer":
-        occ = 9
-    elif occupation  == "Salesperson":
-        occ = 10
-    elif occupation  == "Manager":
-        occ = 11
-
-    
-    if disorder == "No Disorder":
-        dis = 0
-    elif disorder == "Sleep Apnea":
-        dis = 1
-    elif disorder == "Insomnia":
-        dis = 2
-    st.markdown("## Select numerical input")
+    st.markdown("## Select your criteria")
+    gender = st.selectbox('Gender:', ["Male", "Female"])
+    occupation = st.selectbox('Occupation type:', ["Software Engineer", "Doctor","Sales Representative","Software Engineer","Teacher","Nurse","Engineer","Accountant","Scientist","Lawyer","Salesperson","Manager"])
+    disorder = st.selectbox('Disorder type:', ["No Disorder", "Sleep Apnea", "Insomnia"])
+    gender_codes = {"Male": 1, "Female": 0}
+    occupation_codes = {
+        "Software Engineer": 0, 
+        "Doctor": 1, 
+        "Sales Representative": 2, 
+        "Teacher": 4, 
+        "Nurse": 5, 
+        "Engineer": 6, 
+        "Accountant": 7, 
+        "Scientist": 8, 
+        "Lawyer": 9, 
+        "Salesperson": 10, 
+        "Manager": 11
+    }
+    disorder_codes = {"No Disorder": 0, "Sleep Apnea": 1, "Insomnia": 2}
+    gen = gender_codes.get(gender, -1)  
+    occ = occupation_codes.get(occupation, -1)  
+    dis = disorder_codes.get(disorder, -1)  
+    st.markdown("## Select your case from the slider")
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -328,12 +321,12 @@ with class_tab:
     X = np.array(df2[["Gender", "Age", "Occupation", "Sleep Duration", "Quality of Sleep", "Physical Activity Level", "Stress Level", "Heart Rate", "Daily Steps", "Sleep Disorder"]])
     y = np.array(df2["BMI Category"])
 
-    st.markdown("## Enter the test sample percentage")
-    test_fraction_per = st.number_input("Sample Percent", value=20, min_value=5, max_value=40, step=1)
+
+    test_fraction_per = st.slider("Sample Percent", value=20, min_value=5, max_value=40, step=1)
     test_fraction = test_fraction_per / 100
     x_cat_train, x_cat_test, y_cat_train, y_cat_test = train_test_split(X, y, test_size=test_fraction, random_state=0)
     model_type = st.selectbox(
-    "Select a Model",
+    "Model",
     (
         "KNeighborsClassifier",
         "Logistic Regression",
@@ -343,7 +336,7 @@ with class_tab:
 )
     if model_type=="KNeighborsClassifier":
         modell = KNeighborsClassifier()
-        neighbors_num=st.number_input("Enter the number of neighbors", value=3, min_value=1,max_value=30, step=1)
+        neighbors_num=st.slider("Number of neighbors", value=3, min_value=1,max_value=30, step=1)
         modell = KNeighborsClassifier(n_neighbors=neighbors_num)
         modell.fit(x_cat_train, y_cat_train)
         y_cat_pred = modell.predict(x_cat_test)
@@ -363,7 +356,9 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight class is :red[{pred_res}]")
+        accuracy = accuracy_score(y_cat_test, y_cat_pred)
+        st.markdown(f"### Prediction Accuracy: {accuracy * 100:.2f}%")
 
     if model_type=="Logistic Regression":
         modell = LogisticRegression()
@@ -386,7 +381,9 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight class is :red[{pred_res}]")
+        accuracy = accuracy_score(y_cat_test, y_cat_pred)
+        st.markdown(f"### Prediction Accuracy: {accuracy * 100:.2f}%")
     if model_type=="Support Vector Machine":
         modell = SVR()
         modell.fit(x_cat_train, y_cat_train)
@@ -408,7 +405,9 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight class is :red[{pred_res}]")
+        accuracy = accuracy_score(y_cat_test, y_cat_pred)
+        st.markdown(f"### Prediction Accuracy: {accuracy * 100:.2f}%")
 
     if model_type=="RandomForestClassifier":
         modell = RandomForestClassifier()
@@ -430,7 +429,9 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight class is :red[{pred_res}]")
+        accuracy = accuracy_score(y_cat_test, y_cat_pred)
+        st.markdown(f"### Prediction Accuracy: {accuracy * 100:.2f}%")
 
     if model_type=="DecisionTreeClassifier":
         modell = DecisionTreeClassifier()
@@ -453,25 +454,25 @@ with class_tab:
             pred_res= "Overweight"
         elif pred_res==2:
             pred_res= "Obese"
-        st.markdown(f"### Your predicted weight is :red[{pred_res}] based on the input values.")
+        st.markdown(f"### Your predicted weight class is :red[{pred_res}]")
+        accuracy = accuracy_score(y_cat_test, y_cat_pred)
+        st.markdown(f"### Prediction Accuracy: {accuracy * 100:.2f}%")
 
-with user_tab:
-    st.title('Sleep Well to have Health lifestyle and stay Healthy to have Quality Sleep')
 
-    st.header('About the Author')
-    st.write('This section gives you an insight into the creator of the app. Read through the information to learn more about the author\'s background, expertise, and motivations behind creating this app.')
+elif selected_section == "About Author":
+    st.header("About the Author")
+    c1,c2=st.columns([2,2])
+    c1.image('prks.jpg', width=300) 
+    c2.write("<p style='text-align: justify;'>""Hi, I am Prakash K.C. I completed my BSc in Mechanical Engineering. Currently, I am pursuing my graduate study in Mechanical engineering department at Michigan State University. I am working as a research assistant at the FMATH research group. I am an enthusiastic, curious, and industrious person.</p>",unsafe_allow_html=True )
+    c3,c4=st.columns([2,2])
+    c3.write("<p style='text-align: justify;'>"
+"Currently, I am working in a project that model the failure in a overhead transmission line. I have created a mathematical model that integrate Mechanical, Electrical and thermal model along with the environmental features to predict the failure of the line. I have used finite element method to have a deterministic solution. I also implemented PCM method to study the uncertainites in my mathematical model</p>",unsafe_allow_html=True
 
-    st.header('Basic EDA (Exploratory Data Analysis)')
-    st.write('This section allows you to explore the basic statistics and visualizations of the data. Interact with various charts and graphs to understand the data\'s distributions, correlations, and other statistical properties.')
-
-    st.header('A Story')
-    st.write('Here, you\'ll find some specific visualizations that the author created to have a specific idea about the data. Go through the story to gain specific insights that the author wants to deliver.')
-
-    st.header('Model Prediction')
-    st.write('In this tab, you can input specific data of several parameters to predict the quality of sleep and sleep duration using a machine learning model.')
-
-    st.header('Classifier')
-    st.write('This section is dedicated to using several classifier models to predict the weight of an individual based on sleep patterns, daily activities, and health.')
+)
+    c4.image('load.jpg', width=400)
+    st.markdown("[GitHub](https://github.com/meprks)")  
+    st.markdown("[Website](https://sites.google.com/view/meprks/home)")  
+    st.markdown("[LinkedIn](https://www.linkedin.com/in/prks/)")
 
 
    
